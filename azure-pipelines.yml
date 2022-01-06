@@ -1,0 +1,16 @@
+trigger:
+  - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - checkout: self
+    submodules: true
+  - task: AzureStaticWebApp@0
+    inputs:
+      app_location: "/app"
+      api_location: "/api" # Api source code path, applicable only if using Managed Functions. If using Bring Your Own Functions, remove or rename the api folder if present.
+      output_location: "dist/angular-app"
+    env:
+      azure_static_web_apps_api_token: $(deployment_token)
